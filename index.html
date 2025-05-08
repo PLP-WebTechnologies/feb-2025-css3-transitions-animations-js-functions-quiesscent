@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animated Button with Local Storage</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f0f0f0;
+    }
+
+    #animatedBtn {
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #animatedBtn:hover {
+      background-color: #45a049;
+    }
+
+    /* Animation */
+    @keyframes bounce {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    .bouncing {
+      animation: bounce 0.5s;
+    }
+
+    #colorInput {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Animated Button & Local Storage Demo</h2>
+
+  <button id="animatedBtn">Click Me!</button>
+
+  <div id="colorInput">
+    <label for="colorPicker">Set Button Color: </label>
+    <input type="color" id="colorPicker">
+    <button onclick="saveColor()">Save Color</button>
+  </div>
+
+  <script>
+    const btn = document.getElementById("animatedBtn");
+    const colorPicker = document.getElementById("colorPicker");
+
+    // Trigger animation
+    btn.addEventListener("click", () => {
+      btn.classList.add("bouncing");
+      setTimeout(() => btn.classList.remove("bouncing"), 500);
+    });
+
+    // Save preferred color to localStorage
+    function saveColor() {
+      const color = colorPicker.value;
+      localStorage.setItem("btnColor", color);
+      btn.style.backgroundColor = color;
+    }
+
+    // Load saved color on page load
+    window.onload = () => {
+      const savedColor = localStorage.getItem("btnColor");
+      if (savedColor) {
+        btn.style.backgroundColor = savedColor;
+        colorPicker.value = savedColor;
+      }
+    };
+  </script>
+
+</body>
+</html>
